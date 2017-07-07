@@ -1,0 +1,35 @@
+{
+  "name": "oimg",
+  "version": "0.0.1",
+  "description": "optimize image command line tool",
+  "main": "index.js",
+  "bin": {
+    "oimg": "bin/oimg.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woolson/oimg.git"
+  },
+  "keywords": [
+    "command-line",
+    "optimize",
+    "image"
+  ],
+  "author": "woolson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woolson/oimg/issues"
+  },
+  "homepage": "https://github.com/woolson/oimg#readme",
+  "devDependencies": {
+    "columnify": "^1.5.4",
+    "imagemin": "^5.3.1",
+    "imagemin-gifsicle": "^5.1.0",
+    "imagemin-jpegtran": "^5.0.2",
+    "imagemin-pngquant": "^5.0.1",
+    "imagemin-svgo": "^5.2.2"
+  }
+}
