@@ -2,8 +2,10 @@ const fs = require("fs")
 const path = require("path")
 const columnify = require("columnify")
 const {
+  splitName,
   getCmdArgs,
-  filterFiles
+  filterFiles,
+  formatSize,
 } = require("./utils.js")
 const currentPath = process.cwd()
 
@@ -15,23 +17,32 @@ module.exports = (arg) => {
 
   const infos = images.map(item => {
     const fileInfo = fs.statSync(path.join(currentPath, item))
-    const size = (fileInfo.size / 1000).toFixed("2")
-
-    return {
+    const namePiece = splitName(item)
+    const result = {
       name: item,
-      size: `${size}KB`
+      size: formatSize(fileInfo.size)
     }
+
+    const compressName = `${namePiece.name}.compress.${namePiece.ext}`
+    if(fs.existsSync(compressName)) {
+      const compressFile = fs.statSync(path.join(currentPath, compressName))
+      result.compressSize = formatSize(compressFile.size)
+    }else {
+      result.compressSize = ""
+    }
+
+    return result
   })
 
   const logConfig = {
     columns: [
       "name",
-      "size"
+      "size",
+      "compressSize",
      ],
      showHeaders: false,
      columnSplitter: " | "
   }
-
 
   console.log(columnify(infos, logConfig))
 }

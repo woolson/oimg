@@ -25,8 +25,9 @@ module.exports = {
       const ext = o.split(".").pop()
       const isImg = exts.indexOf(ext) !== -1
       const isIgnore = ignoreFiles.indexOf(o) !== -1
+      const isCompressed = o.indexOf(".compress.") !== -1
 
-      return isImg && !isIgnore
+      return isImg && !isIgnore && !isCompressed
     })
   },
   splitName: (fileName) => {
@@ -36,5 +37,16 @@ module.exports = {
       ext: namePiece.pop(),
       name: namePiece.join(".")
     }
+  },
+  formatSize(size, digit = 2) {
+    const unit = ["B", "KB", "MB", "GB", "TB"]
+    let unitIndex = 0
+
+    while(size > 1024) {
+      size = size / 1024
+      unitIndex++
+    }
+
+    return `${size.toFixed(digit)}${unit[unitIndex]}`
   }
 }
