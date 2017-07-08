@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://github.com/woolson/oimg.git">
-    <img width="200" height="250"
-      src="./icon.svg">
+    <img width="200" height="190"
+      src="./icon.png">
   </a>
   <h1 align="center">oimg</h1>
 </div>
