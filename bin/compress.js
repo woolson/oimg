@@ -19,7 +19,9 @@ const currentPath = process.cwd()
 module.exports = (args) => {
   const ignoreFiles = getCmdArgs(args, "--ignore")
   const files = fs.readdirSync(currentPath)
-  const images = filterFiles(files, ignoreFiles)
+  const images = filterFiles(files, ignoreFiles, name => {
+    return name.indexOf(".compress.") === -1
+  })
 
   const imagesPaths = images.map(item => {
     return path.join(currentPath, item)

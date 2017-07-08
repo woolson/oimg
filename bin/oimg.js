@@ -4,6 +4,7 @@ const packageJson = require("../package.json")
 const compress = require("./compress.js")
 const list = require("./list.js")
 const help = require("./help.js")
+const replace = require("./replace.js")
 
 var run = (args) => {
   switch(args[0]) {
@@ -19,10 +20,15 @@ var run = (args) => {
     case "compress":
       compress(args)
       break
+    case "-r":
+    case "replace":
+      replace(args)
+      break
     case "-h":
     case "help":
       help()
       break
+   
   }
 }
 

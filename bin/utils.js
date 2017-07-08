@@ -12,7 +12,7 @@ module.exports = {
 
     return result
   },
-  filterFiles: (files, ignoreFiles) => {
+  filterFiles: (files, ignoreFiles, cb) => {
     const exts = [
       "jpg",
       "jpeg",
@@ -23,11 +23,15 @@ module.exports = {
   
     return files.filter(o => {
       const ext = o.split(".").pop()
-      const isImg = exts.indexOf(ext) !== -1
-      const isIgnore = ignoreFiles.indexOf(o) !== -1
-      const isCompressed = o.indexOf(".compress.") !== -1
 
-      return isImg && !isIgnore && !isCompressed
+      const isImg = exts.indexOf(ext) !== -1
+      const isNeed = cb ? cb(o) : true
+      const isIgnore = ignoreFiles ?
+        ignoreFiles.indexOf(o) !== -1
+        :
+        false
+
+      return isImg && !isIgnore && isNeed
     })
   },
   splitName: (fileName) => {

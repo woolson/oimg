@@ -13,7 +13,9 @@ module.exports = (arg) => {
   // filtered iamges witch needs ignored
   const ignoreFiles = getCmdArgs(arg, "--ignore")
   const files = fs.readdirSync(currentPath)
-  const images = filterFiles(files, ignoreFiles)
+  const images = filterFiles(files, ignoreFiles, name => {
+    return name.indexOf(".compress.") === -1
+  })
 
   // images infomation
   const infos = images.map(item => {
