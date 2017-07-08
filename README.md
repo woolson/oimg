@@ -20,7 +20,7 @@ sudo npm install -g oimg
 
 ### options
 
-- #### show the list of images in current folder, run:
+- #### list all images in current folder, run:
 
 ```bash
 $ oimg [-l|list]
@@ -48,10 +48,11 @@ $ oimg -r --ignore file file file
 
 <h2 align="center">Dependencies</h2>
 
-- [columnify](https://github.com/timoxley/columnify)
 - [imagemin](https://github.com/imagemin/imagemin)
 - [imagemin-pngquant](https://github.com/imagemin/imagemin-pngquant)
 - [imagemin-svgo](https://github.com/imagemin/imagemin-svgo)
 - [imagemin-gifsicle](https://github.com/imagemin/imagemin-gifsicle)
 - [imagemin-svgo](https://github.com/imagemin/imagemin-svgo)
 - [imagemin-jpegtran](https://github.com/imagemin/imagemin-jpegtran)
+- [columnify](https://github.com/timoxley/columnify)
+- [colors](https://github.com/Marak/colors.js)
