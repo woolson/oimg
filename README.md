@@ -37,6 +37,15 @@ $ oimg [-c|compress]
 $ oimg -c --ignore file file file
 ```
 
+- #### use compress images replace origin images, run:
+
+```bash
+$ oimg [-r|replace]
+# ignore some image file with command --ignore
+# ignore file name is origin file name
+$ oimg -r --ignore file file file
+```
+
 <h2 align="center">Dependencies</h2>
 
 - [columnify](https://github.com/timoxley/columnify)

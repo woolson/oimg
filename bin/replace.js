@@ -4,12 +4,16 @@ const path = require("path")
 const colors = require("colors")
 const currentPath = process.cwd()
 const {
+  splitName,
   getCmdArgs,
-  filterFiles
+  filterFiles,
 } = require("./utils.js")
 
 module.exports = (args) => {
-  const ignoreFiles = getCmdArgs(args, "--ignore")
+  const ignoreFiles = getCmdArgs(args, "--ignore").map(o => {
+    const nameSliece = splitName(o)
+    return `${nameSliece.name}.compress.${nameSliece.ext}`
+  })
   const files = fs.readdirSync(currentPath)
   const compressImages = filterFiles(files, ignoreFiles, name => {
     return name.indexOf(".compress.") !== -1
