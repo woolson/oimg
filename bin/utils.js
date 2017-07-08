@@ -42,8 +42,8 @@ module.exports = {
     const unit = ["B", "KB", "MB", "GB", "TB"]
     let unitIndex = 0
 
-    while(size > 1024) {
-      size = size / 1024
+    while(size > 1000) {
+      size = size / 1000
       unitIndex++
     }
 
