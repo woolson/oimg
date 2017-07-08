@@ -43,7 +43,7 @@ module.exports = (arg) => {
      showHeaders: false,
      columnSplitter: " | "
   }
-  const hasCompressedFile = infos.some(o => o.compressSize !== "")
+  const hasCompressedFile = infos.some(o => o.compressSize !== undefined)
   // add compressSize column if compressed image is exist
   if(hasCompressedFile) logConfig.columns.push("compressSize")
 
