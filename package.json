@@ -30,6 +30,7 @@
     "imagemin-gifsicle": "^5.1.0",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-pngquant": "^5.0.1",
-    "imagemin-svgo": "^5.2.2"
+    "imagemin-svgo": "^5.2.2",
+    "replace-ext": "^1.0.0"
   }
 }

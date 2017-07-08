@@ -28,5 +28,13 @@ module.exports = {
 
       return isImg && !isIgnore
     })
+  },
+  splitName: (fileName) => {
+    const namePiece = fileName.split(".")
+
+    return {
+      ext: namePiece.pop(),
+      name: namePiece.join(".")
+    }
   }
 }
