@@ -1,5 +1,3 @@
-// compress command file
-
 const fs = require("fs")
 const path = require("path")
 const columnify = require("columnify")
@@ -8,26 +6,27 @@ const imageminJpeg = require("imagemin-jpegtran")
 const imageminPng = require("imagemin-pngquant")
 const imageminGif = require("imagemin-gifsicle")
 const imageminSvg = require("imagemin-svgo")
-const list = require("./list.js")
+const {list} = require("./list.js")
 const {
-  splitName,
-  getCmdArgs,
-  filterFiles
+  filterFile,
+  getFolderImg
 } = require("./utils.js")
-const currentPath = process.cwd()
+const cp = process.cwd()
 
-module.exports = (args) => {
-  const ignoreFiles = getCmdArgs(args, "--ignore")
-  const files = fs.readdirSync(currentPath)
-  const images = filterFiles(files, ignoreFiles, name => {
-    return name.indexOf(".compress.") === -1
-  })
+module.exports = {
+  compress,
+}
 
-  const imagesPaths = images.map(item => {
-    return path.join(currentPath, item)
-  })
+function compress(args) {
+  const ignoreFiles = [args.ignore]
+  const files = fs.readdirSync(cp)
+  const images = filterFile(
+    getFolderImg(files),
+    ignoreFiles,
+    imgPath => imgPath.indexOf(".compress.") === -1
+  )
 
-  imagemin(imagesPaths, "imagemin-dist", {
+  imagemin(images, "dist", {
     plugins: [
       imageminJpeg(),
       imageminPng({quality: "65-80"}),
@@ -37,15 +36,14 @@ module.exports = (args) => {
   }).then(files => {
     // move file to current folder
     files.forEach(item => {
-      const filePath = path.join(currentPath, item.path)
-      const pathSliece = splitName(filePath)
-      const newName = pathSliece.name.replace("/imagemin-dist", "")
-      const newPath = `${newName}.compress.${pathSliece.ext}`
-      fs.renameSync(filePath, newPath)
+      const fileParse = path.parse(path.join(cp, item.path))
+      const {name, ext, base, dir} = fileParse
+      const newName = `${name}.compress${ext}`
+      fs.renameSync(`${dir}/${base}`, newName)
     })
 
     // delete generated folder
-    fs.rmdirSync(path.join(currentPath, "/imagemin-dist"))
+    fs.rmdirSync(path.join(cp, "/dist"))
 
     list([])
   })

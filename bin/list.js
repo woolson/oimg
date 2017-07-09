@@ -2,34 +2,39 @@ const fs = require("fs")
 const path = require("path")
 const columnify = require("columnify")
 const {
-  splitName,
-  getCmdArgs,
-  filterFiles,
+  filterFile,
   formatSize,
+  getFolderImg,
 } = require("./utils.js")
-const currentPath = process.cwd()
+const cp = process.cwd()
 
-module.exports = (arg) => {
-  // filtered iamges witch needs ignored
-  const ignoreFiles = getCmdArgs(arg, "--ignore")
-  const files = fs.readdirSync(currentPath)
-  const images = filterFiles(files, ignoreFiles, name => {
-    return name.indexOf(".compress.") === -1
-  })
+module.exports = {
+  list,
+}
+
+function list(args) {
+  const ignoreFiles = [args.ignore]
+  const foldFile = fs.readdirSync(cp)
+  const images = filterFile(
+    getFolderImg(foldFile),
+    ignoreFiles,
+    imgPath => imgPath.indexOf(".compress.") === -1
+  )
 
   // images infomation
   const infos = images.map(item => {
-    const fileInfo = fs.statSync(path.join(currentPath, item))
-    const namePiece = splitName(item)
-    const compressName = `${namePiece.name}.compress.${namePiece.ext}`
+    const {base, name, ext} = path.parse(item)
     const result = {
-      name: item,
-      size: formatSize(fileInfo.size)
+      name: base,
+      path: item,
+      size: fs.statSync(item).size
     }
 
-    if(fs.existsSync(compressName)) {
-      const compressFile = fs.statSync(path.join(currentPath, compressName))
-      result.compressSize = formatSize(compressFile.size)
+    const compressFile = `${name}.compress${ext}`
+    if(fs.existsSync(compressFile)) {
+      const fileInfo = fs.statSync(path.join(cp, compressFile))
+      result.compressSize = formatSize(fileInfo.size)
+      result.ratio = fileInfo.size / result.size
     }
 
     return result
@@ -39,13 +44,35 @@ module.exports = (arg) => {
     columns: [
       "name",
       "size",
-     ],
-     showHeaders: false,
-     columnSplitter: " | "
+    ],
+    showHeaders: false,
+    columnSplitter: " ",
+    config: {
+      size: {
+        dataTransform: size => formatSize(size)
+      },
+      ratio: {
+        dataTransform: ratio => {
+          if(ratio) {
+            return ((1 - ratio) * 100).toFixed(0) + "%"
+          }else {
+            return ""
+          }
+        }
+      }
+    }
   }
-  const hasCompressedFile = infos.some(o => o.compressSize !== undefined)
+  const hasCompressedFile = infos.some(o =>
+    o.compressSize !== undefined
+  )
   // add compressSize column if compressed image is exist
-  if(hasCompressedFile) logConfig.columns.push("compressSize")
+  if(hasCompressedFile) {
+    logConfig.columns = logConfig.columns.concat([
+      "compressSize",
+      "ratio"
+    ])
+  }
 
   console.log(columnify(infos, logConfig))
 }
+
