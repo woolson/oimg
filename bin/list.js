@@ -2,6 +2,7 @@ const fs = require("fs")
 const path = require("path")
 const columnify = require("columnify")
 const {
+  getArgv,
   filterFile,
   formatSize,
   getFolderImg,
@@ -13,7 +14,7 @@ module.exports = {
 }
 
 function list(args) {
-  const ignoreFiles = [args.ignore]
+  const ignoreFiles = getArgv(process.argv).ignore
   const foldFile = fs.readdirSync(cp)
   const images = filterFile(
     getFolderImg(foldFile),
@@ -75,4 +76,3 @@ function list(args) {
 
   console.log(columnify(infos, logConfig))
 }
-

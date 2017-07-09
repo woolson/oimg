@@ -8,14 +8,26 @@ module.exports = {
   isImage,
 }
 
-function getCmdArgs(args, cmd) {
-  let start = false
-  let result = []
+function getArgv(args) {
+  args = args.slice(3)
+
+  const result = {}
+  const alias = {
+    "i": "ignore",
+  } 
+  let key = ""
 
   args.forEach(item => {
-    if(start) result.push(item)
-    if(item.indexOf("-") !== -1) start = false
-    if(item === cmd) start = true
+    if(
+      item.indexOf("-") !== -1 ||
+      item.indexOf("--") !== -1
+     ) {
+       key = item.replace(/-/g, "")
+       key = alias[key] || key
+       result[key] = []
+     }else {
+       result[key].push(item)
+     }
   })
 
   return result
