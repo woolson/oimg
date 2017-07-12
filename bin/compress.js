@@ -6,7 +6,7 @@ const imageminJpeg = require("imagemin-jpegtran")
 const imageminPng = require("imagemin-pngquant")
 const imageminGif = require("imagemin-gifsicle")
 const imageminSvg = require("imagemin-svgo")
-const {list} = require("./list.js")
+const list = require("./list.js")
 const {
   getArgv,
   filterFile,
@@ -14,9 +14,7 @@ const {
 } = require("./utils.js")
 const cp = process.cwd()
 
-module.exports = {
-  compress,
-}
+module.exports = compress
 
 function compress(args) {
   const ignoreFiles = getArgv(process.argv).ignore

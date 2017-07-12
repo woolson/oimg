@@ -8,6 +8,11 @@
 
 Optimize image[png, jpg, jpeg, svg, gif] command line tool.
 
+<h2 align="center">TODO List</h2>
+- command optiomize
+- command alias
+- ​
+
 <h2 align="center">Install</h2>
 
 install with `npm`

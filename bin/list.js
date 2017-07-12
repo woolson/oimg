@@ -9,12 +9,10 @@ const {
 } = require("./utils.js")
 const cp = process.cwd()
 
-module.exports = {
-  list,
-}
+module.exports = list
 
 function list(args) {
-  const ignoreFiles = getArgv(process.argv).ignore
+  const ignoreFiles = getArgv(process.argv).ignore || []
   const foldFile = fs.readdirSync(cp)
   const images = filterFile(
     getFolderImg(foldFile),
@@ -54,11 +52,8 @@ function list(args) {
       },
       ratio: {
         dataTransform: ratio => {
-          if(ratio) {
-            return ((1 - ratio) * 100).toFixed(0) + "%"
-          }else {
-            return ""
-          }
+          if(ratio) return ((1 - ratio) * 100).toFixed(0) + "%"
+          else return ""
         }
       }
     }
