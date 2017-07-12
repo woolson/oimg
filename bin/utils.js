@@ -1,7 +1,7 @@
 const path = require("path")
 const cp = process.cwd()
 module.exports = {
-  getCmdArgs,
+  getArgv,
   filterFile,
   formatSize,
   getFolderImg,
@@ -14,7 +14,7 @@ function getArgv(args) {
   const result = {}
   const alias = {
     "i": "ignore",
-  } 
+  }
   let key = ""
 
   args.forEach(item => {
@@ -22,18 +22,20 @@ function getArgv(args) {
       item.indexOf("-") !== -1 ||
       item.indexOf("--") !== -1
      ) {
-       key = item.replace(/-/g, "")
-       key = alias[key] || key
-       result[key] = []
-     }else {
-       result[key].push(item)
-     }
+      key = item.replace(/-/g, "")
+      key = alias[key] || key
+      result[key] = []
+    }else {
+      result[key].push(item)
+    }
   })
 
   return result
 }
 
 function filterFile(files, ignoreFiles, cb) {
+  ignoreFiles = ignoreFiles.map(o => path.resolve(o))
+
   return files.filter(o => {
     const isImg = isImage(o)
     const isNeed = cb ? cb(o) : true

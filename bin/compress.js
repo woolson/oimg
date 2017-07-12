@@ -8,6 +8,7 @@ const imageminGif = require("imagemin-gifsicle")
 const imageminSvg = require("imagemin-svgo")
 const {list} = require("./list.js")
 const {
+  getArgv,
   filterFile,
   getFolderImg
 } = require("./utils.js")
@@ -18,7 +19,7 @@ module.exports = {
 }
 
 function compress(args) {
-  const ignoreFiles = getCmdArgs(process.argv).ignore
+  const ignoreFiles = getArgv(process.argv).ignore
   const files = fs.readdirSync(cp)
   const images = filterFile(
     getFolderImg(files),
