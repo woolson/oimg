@@ -17,7 +17,7 @@ const cp = process.cwd()
 module.exports = compress
 
 function compress(args) {
-  const ignoreFiles = getArgv(process.argv).ignore
+  const ignoreFiles = getArgv(process.argv).ignore || []
   const files = fs.readdirSync(cp)
   const images = filterFile(
     getFolderImg(files),

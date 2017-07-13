@@ -19,5 +19,6 @@ const argv = yargs
     "compress image",
     {
     }, compress)
-  .help("-h")
+  .example("$0 l -i abc.jpg", "list all image file & ignore some file")
+  .help()
   .argv
