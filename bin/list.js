@@ -1,4 +1,6 @@
+const yargs = require("yargs")
 const fs = require("fs")
+const colors = require("colors")
 const path = require("path")
 const columnify = require("columnify")
 const {
@@ -9,14 +11,38 @@ const {
 } = require("./utils.js")
 const cp = process.cwd()
 
-module.exports = list
+exports.list     = list
+exports.handler  = list
+exports.command  = "list"
+exports.describe = "show all valid images"
+exports.builder  = () => {
+  yargs
+  .option({
+    "i": {
+      alias: "ignore",
+      description: "files will be ignore",
+    },
+    "f": {
+      alias: "folder",
+      description: "that path image will be show",
+    },
+  })
+  .help("h")
+  .alias("h", "help")
+}
 
-function list(args) {
-  const ignoreFiles = getArgv(process.argv).ignore || []
-  const foldFile = fs.readdirSync(cp)
+function list() {
+  const args = getArgv(process.argv)
+  const cPath = args.path ? path.resolve(args.path[0]) : cp
+
+  if(!fs.existsSync(cPath)) {
+    console.log("Path: " + "%s".red + " does not exist.", cPath)
+    process.exit(1)
+  }
+
   const images = filterFile(
-    getFolderImg(foldFile),
-    ignoreFiles,
+    getFolderImg(cPath),
+    args.ignore || [],
     imgPath => imgPath.indexOf(".compress.") === -1
   )
 
@@ -31,7 +57,7 @@ function list(args) {
 
     const compressFile = `${name}.compress${ext}`
     if(fs.existsSync(compressFile)) {
-      const fileInfo = fs.statSync(path.join(cp, compressFile))
+      const fileInfo = fs.statSync(path.join(cPath, compressFile))
       result.compressSize = formatSize(fileInfo.size)
       result.ratio = fileInfo.size / result.size
     }
@@ -69,5 +95,9 @@ function list(args) {
     ])
   }
 
-  console.log(columnify(infos, logConfig))
+  if(infos.length === 0) {
+    console.log("Path: " + "%s".green + " has No image file.", cPath)
+  }else {
+    console.log(columnify(infos, logConfig))
+  }
 }

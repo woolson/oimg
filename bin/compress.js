@@ -14,14 +14,26 @@ const {
 } = require("./utils.js")
 const cp = process.cwd()
 
-module.exports = compress
+exports.compress = compress
+exports.handler  = compress
+exports.command  = "compress"
+exports.describe = "compress select image"
+exports.builder  = () => {
+  yargs
+    .option("i", {
+      alias: "ignore",
+      description: "files will be ignore",
+    })
+    .help("h")
+    .alias("h", "help")
+}
 
-function compress(args) {
-  const ignoreFiles = getArgv(process.argv).ignore || []
-  const files = fs.readdirSync(cp)
+function compress() {
+  const args = getArgv(process.argv)
+  const cPath = args.path ? path.resolve(args.path[0]) : cp
   const images = filterFile(
-    getFolderImg(files),
-    ignoreFiles,
+    getFolderImg(cPath),
+    args.ignore || [],
     imgPath => imgPath.indexOf(".compress.") === -1
   )
 

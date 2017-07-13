@@ -1,4 +1,5 @@
 const path = require("path")
+const fs = require("fs")
 const cp = process.cwd()
 module.exports = {
   getArgv,
@@ -14,14 +15,12 @@ function getArgv(args) {
   const result = {}
   const alias = {
     "i": "ignore",
+    "p": "path",
   }
   let key = ""
 
   args.forEach(item => {
-    if(
-      item.indexOf("-") !== -1 ||
-      item.indexOf("--") !== -1
-     ) {
+    if(/^-/.test(item)) {
       key = item.replace(/-/g, "")
       key = alias[key] || key
       result[key] = []
@@ -57,12 +56,13 @@ function formatSize(size, digit = 2) {
     unitIndex++
   }
 
-  return `${size.toFixed(digit)}${unit[unitIndex]}`
+  return `${Number(size).toFixed(digit)}${unit[unitIndex]}`
 }
 
-function getFolderImg(items) {
-  items = items.filter(o => isImage(o))
-  return items.map(o => path.join(cp, o))
+function getFolderImg(cPath) {
+  const foldFile = fs.readdirSync(cPath)
+  const images = foldFile.filter(o => isImage(o))
+  return images.map(o => path.join(cPath, o))
 }
 
 function isImage(imgPath) {

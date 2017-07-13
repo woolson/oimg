@@ -8,8 +8,19 @@ const {
   filterFile,
 } = require("./utils.js")
 
-module.exports = {
-  replace,
+exports.command  = "replace"
+exports.describe = "replace compressed images"
+exports.handler  = replace
+exports.builder  = () => {
+  yargs
+    .option({
+      "i": {
+        alias: "ignore",
+        description: "files will be ignore",
+      }
+    })
+    .help("h")
+    .alias("h", "help")
 }
 
 function replace(args) {
