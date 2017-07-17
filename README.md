@@ -9,6 +9,7 @@
 Optimize image[png, jpg, jpeg, svg, gif] command line tool.
 
 <h2 align="center">TODO List</h2>
+
 - command optiomize;
 - command alias;
 - config compress quality.
