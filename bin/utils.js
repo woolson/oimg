@@ -16,6 +16,7 @@ function getArgv(args) {
   const alias = {
     "i": "ignore",
     "p": "path",
+    "q": "quality",
   }
   let key = ""
 

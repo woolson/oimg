@@ -2,7 +2,7 @@ const fs = require("fs")
 const path = require("path")
 const columnify = require("columnify")
 const imagemin = require("imagemin")
-const imageminJpeg = require("imagemin-jpegtran")
+const imageminJpeg = require("imagemin-jpegoptim")
 const imageminPng = require("imagemin-pngquant")
 const imageminGif = require("imagemin-gifsicle")
 const imageminSvg = require("imagemin-svgo")
@@ -30,19 +30,23 @@ exports.builder  = () => {
 
 function compress() {
   const args = getArgv(process.argv)
+  const quality = args.quality || 6
   const cPath = args.path ? path.resolve(args.path[0]) : cp
   const images = filterFile(
     getFolderImg(cPath),
     args.ignore || [],
     imgPath => imgPath.indexOf(".compress.") === -1
   )
+  const formatQuality = {
+    hundred: `${(quality - 1) * 10}-${quality * 10}`,
+    forGif: parseInt(quality /  10 * 3),
+  }
 
   imagemin(images, "dist", {
     plugins: [
-      imageminJpeg(),
-      imageminPng({quality: "65-80"}),
-      imageminGif(),
-      imageminSvg(),
+      imageminJpeg({quality: formatQuality.hundred}),
+      imageminPng({quality: formatQuality.hundred}),
+      imageminGif({optimizationLevel: formatQuality.forGif}),
     ]
   }).then(files => {
     // move file to current folder
