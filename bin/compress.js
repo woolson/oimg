@@ -1,4 +1,5 @@
 const fs = require("fs")
+const yargs = require("yargs")
 const path = require("path")
 const columnify = require("columnify")
 const imagemin = require("imagemin")
@@ -6,7 +7,7 @@ const imageminJpeg = require("imagemin-jpegoptim")
 const imageminPng = require("imagemin-pngquant")
 const imageminGif = require("imagemin-gifsicle")
 const imageminSvg = require("imagemin-svgo")
-const list = require("./list.js")
+const list = require("./list.js").list
 const {
   getArgv,
   filterFile,
