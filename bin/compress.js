@@ -21,9 +21,14 @@ exports.command  = "compress"
 exports.describe = "compress select image"
 exports.builder  = () => {
   yargs
+    .alias("c", "compress")
     .option("i", {
       alias: "ignore",
       description: "files will be ignore",
+    })
+    .option("q", {
+      alias: "quality",
+      description: "compress quality",
     })
     .help("h")
     .alias("h", "help")

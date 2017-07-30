@@ -1,13 +1,5 @@
-/*
-* @Author: woolson
-* @Date:   2017-07-27 21:07:00
-* @Email:  woolson.lee@gmail.com
-* @Last modified by:   woolson
-* @Last modified time: 2017-07-27 21:07:60
-*/
-
-// remove file
 const yargs = require("yargs")
+const colors = require("colors")
 const fs = require("fs")
 const path = require("path")
 const cp = process.cwd()
@@ -40,4 +32,5 @@ function remove() {
   })
 
   valideImg.forEach(o => fs.unlinkSync(o))
+  console.log("remove complete!".green)
 }

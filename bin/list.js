@@ -36,7 +36,7 @@ function list() {
   const cPath = args.path ? path.resolve(args.path[0]) : cp
 
   if(!fs.existsSync(cPath)) {
-    console.log("Path: " + "%s".red + " does not exist.", cPath)
+    console.log("Error: ".red + "%s".underline + " does not exist.", cPath)
     process.exit(1)
   }
 
@@ -96,7 +96,7 @@ function list() {
   }
 
   if(infos.length === 0) {
-    console.log("Path: " + "%s".green + " has No image file.", cPath)
+    console.log("Error: ".red + "%s".underline + " has No image file.", cPath)
   }else {
     console.log(columnify(infos, logConfig))
   }

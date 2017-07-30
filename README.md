@@ -12,9 +12,7 @@ Optimize image[png, jpg, jpeg, svg, gif] command line tool.
 
 > overflow 8
 
-- command optiomize;
-- command alias;
-- config compress quality.
+- optimize workflow.
 
 <h2 align="center">Install</h2>
 
@@ -31,27 +29,36 @@ sudo npm install -g oimg
 - #### list all images in current folder, run:
 
 ```bash
-$ oimg [-l|--list]
+$ oimg list
 # ignore some image file with command --ignore
-$ oimg -l --ignore file file file
+$ oimg list -i file file file
+# use -p option to specific folder path, absolute or relative
+$ oimg list -p ../images
 ```
-
 
 - #### compress images, run:
 
 ```bash
-$ oimg [-c|--compress]
+$ oimg compress
 # ignore some image file with command --ignore
-$ oimg -c --ignore file file file
+$ oimg compress -i file file file
+# use -q option to specific compress quality
+$ oimg compress -q [1-10]
 ```
 
 - #### use compress images replace origin images, run:
 
 ```bash
-$ oimg [-r|--replace]
+$ oimg replace
 # ignore some image file with command --ignore
 # ignore file name is origin file name
-$ oimg -r --ignore file file file
+$ oimg replace -i file file file
+```
+
+- #### remove generated files if result is not ideal.
+
+```bash
+$ oimg remove
 ```
 
 <h2 align="center">Dependencies</h2>
