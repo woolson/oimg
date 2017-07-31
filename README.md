@@ -26,7 +26,7 @@ sudo npm install -g oimg
 
 ### options
 
-- #### list all images in current folder, run:
+- #### list all images, run:
 
 ```bash
 $ oimg list
