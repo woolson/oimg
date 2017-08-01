@@ -11,11 +11,11 @@ const {
 } = require("./utils.js")
 const cp = process.cwd()
 
-exports.list     = list
-exports.handler  = list
-exports.command  = "list"
+exports.list = list
+exports.handler = list
+exports.command = "list"
 exports.describe = "show all valid images"
-exports.builder  = () => {
+exports.builder = () => {
   yargs
   .option({
     "i": {

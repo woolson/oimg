@@ -9,10 +9,10 @@ const {
   getFolderImg,
 } = require("./utils.js")
 
-exports.command  = "remove"
+exports.command = "remove"
 exports.describe = "remove the generated file after compress"
-exports.handler  = remove
-exports.builder  = () => {
+exports.handler = remove
+exports.builder = () => {
   yargs
     .option({
       "i": {

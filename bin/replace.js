@@ -8,10 +8,10 @@ const {
   filterFile,
 } = require("./utils.js")
 
-exports.command  = "replace"
+exports.command = "replace"
 exports.describe = "replace compressed images"
-exports.handler  = replace
-exports.builder  = () => {
+exports.handler = replace
+exports.builder = () => {
   yargs
     .option({
       "i": {
@@ -42,5 +42,5 @@ function replace(args) {
     fs.renameSync(item, newName)
   })
 
-  console.log("Complete Success!".green);
+  console.log("Complete Success!".green)
 }

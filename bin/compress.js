@@ -16,10 +16,10 @@ const {
 const cp = process.cwd()
 
 exports.compress = compress
-exports.handler  = compress
-exports.command  = "compress"
+exports.handler = compress
+exports.command = "compress"
 exports.describe = "compress select image"
-exports.builder  = () => {
+exports.builder = () => {
   yargs
     .alias("c", "compress")
     .option("i", {
@@ -45,7 +45,7 @@ function compress() {
   )
   const formatQuality = {
     hundred: `${(quality - 1) * 10}-${quality * 10}`,
-    forGif: parseInt(quality /  10 * 3),
+    forGif: parseInt(quality / 10 * 3),
   }
 
   imagemin(images, "dist", {
