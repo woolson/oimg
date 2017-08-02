@@ -67,5 +67,7 @@ function compress() {
     fs.rmdirSync(path.join(cp, "/dist"))
 
     list([])
+  }).catch(err => {
+    console.log(err)
   })
 }
