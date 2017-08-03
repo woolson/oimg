@@ -66,8 +66,6 @@ function compress() {
     // delete generated folder
     fs.rmdirSync(path.join(cp, "/dist"))
 
-    list([])
-  }).catch(err => {
-    console.log(err)
-  })
+    list()
+  }).catch(err => console.log(err))
 }
