@@ -12,6 +12,7 @@ Optimize image[png, jpg, jpeg, svg, gif] command line tool.
 
 > overflow 8
 
+- think about next.
 - optimize workflow.
 
 <h2 align="center">Install</h2>

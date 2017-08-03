@@ -5,7 +5,6 @@ const path = require("path")
 const cp = process.cwd()
 const {
   getArgv,
-  filterFile,
   getFolderImg,
 } = require("./utils.js")
 
