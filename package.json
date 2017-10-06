@@ -1,5 +1,5 @@
 {
-  "name": "oimg",
+  "name": "@woolson/oimg",
   "version": "0.1.0",
   "description": "optimize image command line tool",
   "main": "index.js",
