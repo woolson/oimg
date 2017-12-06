@@ -3,7 +3,7 @@ const yargs = require("yargs")
 const path = require("path")
 const columnify = require("columnify")
 const imagemin = require("imagemin")
-const imageminJpeg = require("imagemin-jpegoptim")
+const imageminJpeg = require("imagemin-jpegtran")
 const imageminPng = require("imagemin-pngquant")
 const imageminGif = require("imagemin-gifsicle")
 const imageminSvg = require("imagemin-svgo")
@@ -48,24 +48,30 @@ function compress() {
 		forGif: parseInt(quality / 10 * 3),
 	}
 
+	console.log(formatQuality);
+
 	imagemin(images, "dist", {
 		plugins: [
 			imageminJpeg({quality: formatQuality.hundred}),
 			imageminPng({quality: formatQuality.hundred}),
 			imageminGif({optimizationLevel: formatQuality.forGif}),
 		]
-	}).then(files => {
-		// move file to current folder
-		files.forEach(item => {
-			const fileParse = path.parse(path.join(cp, item.path))
-			const {name, ext, base, dir} = fileParse
-			const newName = `${name}.compress${ext}`
-			fs.renameSync(`${dir}/${base}`, newName)
+	})
+		.then(files => {
+			// move file to current folder
+			files.forEach(item => {
+				const fileParse = path.parse(path.join(cp, item.path))
+				const {name, ext, base, dir} = fileParse
+				const newName = `${name}.compress${ext}`
+				fs.renameSync(`${dir}/${base}`, newName)
+			})
+
+			// delete generated folder
+			fs.rmdirSync(path.join(cp, "/dist"))
+
+			list()
 		})
-
-		// delete generated folder
-		fs.rmdirSync(path.join(cp, "/dist"))
-
-		list()
-	}).catch(err => console.log(err))
+		.catch(err => {
+			console.log(err)
+		})
 }
